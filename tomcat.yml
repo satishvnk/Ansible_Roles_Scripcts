@@ -1,0 +1,23 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+  - name: install tomcat
+    yum:
+     name: tomcat
+     state: latest
+  - name: start service
+    service:
+     name: tomcat
+     state: started
+  - name: copy files
+    copy:
+     src: Calendar.war
+     dest: /usr/share/tomcat/webapps/
+    notify: restart tomcat
+  handlers:
+  - name: restart tomcat
+    service:
+     name: tomcat
+     state: restared
+

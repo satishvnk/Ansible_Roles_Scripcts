@@ -1,0 +1,7 @@
+---
+- hosts: devops
+  tasks:
+  - name: copy files to dest tmp
+    copy:
+     src: /opt/raju
+     dest: /tmp

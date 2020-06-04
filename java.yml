@@ -1,0 +1,32 @@
+---
+ - name: hosts details
+   hosts: devops
+   become: yes
+   vars:
+     packagename: apache-tomcat-9.0.30.tar.gz
+   tasks:
+   - name: install java
+     yum:
+      name: java-1.8.0-openjdk
+      state: present
+   - name: set up evn
+     alternatives:
+       name: java
+       link:  /usr/bin/java
+       path:  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.222.b10-0.amzn2.0.1.x86_64/jre/bin/java
+   - name: download tomcat
+     get_url:
+       url: http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.30/bin/{{packagename}}
+       dest: /opt
+   - name: extract tomcat
+     unarchive:
+       src: /opt/{{packagename}}
+       dest: /opt
+       remote_src: yes
+   - name: start tomcat
+     shell: nohup /opt/{{packagename}}/bin/startup.sh &
+     register: test_file
+     become: yes
+   - name: output
+     debug:
+       msg: "{{test_file}}"

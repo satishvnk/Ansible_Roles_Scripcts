@@ -1,0 +1,16 @@
+---
+- hosts: local
+  become: yes
+  tasks:
+  - name: create ec2
+    ec2:
+     key_name: stephen.pem
+     instance_type: t2.micro
+     image: ami-0adab12dcddc251ea
+     wait: yes
+     region: us-east-2c
+     group: default
+     count: 1
+     vpc_subnet_id: subnet-7b1b9e37
+     assign_public_ip: yes
+

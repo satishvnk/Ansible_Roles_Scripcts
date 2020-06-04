@@ -1,0 +1,2 @@
+src_path: Calendar.war
+dest_path: /usr/share/tomcat/webapps/

@@ -1,0 +1,13 @@
+---
+- hosts: devops
+  tasks:
+  - name: install httpd
+    yum:
+     name: httpd
+     state: latest
+    become: yes
+  - name: start ervice
+    service:
+     name: httpd
+     state: started
+    become: yes

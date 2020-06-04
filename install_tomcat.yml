@@ -1,0 +1,25 @@
+---
+- hosts: local
+  become: yes 
+  vars:
+    dest_path: /usr/share/tomcat/webapps/
+  tasks:
+  - name : install tomcat
+    yum:
+     name: tomcat
+     state: latest
+  - name: start  service
+    service:
+     name: tomcat
+     state: started
+  - name: copy Calendar.war file to webapps
+    copy:
+     src: Calendar.war
+     dest: "{{ dest_path }}"
+    notify: restart tomcat
+  handlers:
+  - name: restart tomcat
+    service:
+     name: tomcat
+     state: restarted
+
